@@ -117,7 +117,7 @@ const Hero = () => {
           transition={{ delay: 0.1 }}
           className="text-5xl md:text-8xl font-display font-bold leading-[0.9] tracking-tighter mb-8"
         >
-          We Help <span className="text-brand text-glow">SaaS Founders</span> Get <br className="hidden md:block" />
+          We Help <span className="text-brand text-glow">Businesses</span> Get <br className="hidden md:block" />
           <span className="italic">More Demo Calls</span> Without Paid Ads
         </motion.h1>
         
@@ -302,7 +302,7 @@ const FAQ = () => {
   
   const faqs = [
     { q: "How long is the call?", a: "The call is exactly 20 minutes. It's a high-value discovery session, not a high-pressure sales pitch." },
-    { q: "Is this only for large companies?", a: "No, we work with early-stage SaaS and established B2B firms. If you have a solid product and need more calls, we help." },
+    { q: "Is this only for large companies?", a: "No, we work with businesses of all sizes and established B2B firms. If you have a solid product and need more calls, we help." },
     { q: "What happens after the call?", a: "You'll receive a full follow-up summary and a custom strategy plan within 24 business hours." },
     { q: "Do I need to prepare anything?", a: "Just an open mind. We guide the conversation and ask focused questions about your current model." },
     { q: "What if I'm not ready to commit?", a: "That's perfectly fine. Many of our clients start with the discovery call just to identify their own bottlenecks." }
@@ -518,7 +518,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-12 mb-20">
           <div className="col-span-2">
             <div className="text-2xl font-display font-bold mb-6 italic">ConvertMax</div>
-            <p className="text-white/40 max-w-sm mb-8 font-medium">The performance partner for SaaS founders who are tired of guessing. We turn clicks into predictable revenue.</p>
+            <p className="text-white/40 max-w-sm mb-8 font-medium">The performance partner for businesses who are tired of guessing. We turn clicks into predictable revenue.</p>
           </div>
           <div>
             <div className="text-xs font-bold uppercase tracking-widest text-brand mb-6">Company</div>
