@@ -1,0 +1,26 @@
+{
+  "entities": {
+    "Lead": {
+      "title": "Lead",
+      "description": "Information collected from prospective clients via the lead gen form.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Full name of the lead" },
+        "email": { "type": "string", "format": "email", "description": "Business email of the lead" },
+        "company": { "type": "string", "description": "Company name" },
+        "phone": { "type": "string", "description": "Optional phone number" },
+        "challenge": { "type": "string", "description": "The biggest challenge they are facing" },
+        "referralSource": { "type": "string", "description": "How they heard about us" },
+        "status": { "type": "string", "enum": ["new", "contacted", "qualified", "closed"], "description": "Current status of the lead" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the lead was created" }
+      },
+      "required": ["name", "email", "company", "challenge"]
+    }
+  },
+  "firestore": {
+    "/leads/{leadId}": {
+      "schema": "Lead",
+      "description": "Collection of leads submitted via the landing page."
+    }
+  }
+}

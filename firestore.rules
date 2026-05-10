@@ -1,0 +1,44 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+    
+    // Primitives
+    function isSignedIn() { return request.auth != null; }
+    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+
+    // Validation for Lead
+    function isValidLead(data) {
+      return data.keys().hasAll(['name', 'email', 'company', 'challenge', 'referralSource', 'status', 'createdAt'])
+        && data.name is string && data.name.size() <= 100
+        && data.email is string && data.email.size() <= 255
+        && data.company is string && data.company.size() <= 100
+        && data.challenge is string && data.challenge.size() <= 100
+        && data.status in ['new', 'contacted', 'qualified', 'closed']
+        && data.createdAt is timestamp;
+    }
+
+    match /leads/{leadId} {
+      // Allowing public creation of leads
+      allow create: if isValidLead(incoming())
+        && incoming().status == 'new'
+        && incoming().createdAt == request.time;
+      
+      // Only admins or the owner could read - but for this applet, 
+      // we'll keep it strictly write-only for public browsers.
+      // Usually you'd have an admin dashboard.
+      allow read: if false; 
+    }
+    
+    match /test/connection {
+      allow read: if true;
+    }
+  }
+}
