@@ -7,8 +7,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', '');
 
   return {
-    // This is the most important line for custom domains
-    base: '/',                    // ← Changed / Added this
+    base: '/',                    // ← This line is critical
 
     plugins: [react(), tailwindcss()],
 
@@ -23,8 +22,6 @@ export default defineConfig(({ mode }) => {
     },
 
     server: {
-      // HMR is disabled in AI Studio via DISABLE_HMR env var.
-      // Do not modify—file watching is disabled to prevent flickering during agent edits.
       hmr: process.env.DISABLE_HMR !== 'true',
     },
   };
