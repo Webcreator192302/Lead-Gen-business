@@ -361,9 +361,39 @@ const BookingForm = () => {
   setStatus('loading');
   
   try {
-    // Save to Firestore (this works)
+    // Save to Firestore
     await saveLead(formData);
     
+    // Send notification email to you (the owner)
+    await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${import.meta.env.VITE_RESEND_API_KEY}`,
+      },
+      body: JSON.stringify({
+        from: import.meta.env.VITE_FROM_EMAIL || 'noreply@convertmax.online',
+        to: import.meta.env.VITE_NOTIFICATION_EMAIL,
+        subject: `New Lead: ${formData.name} from ConvertMax`,
+        html: ownerNotificationEmailTemplate(formData),
+      }),
+    });
+
+    // Send confirmation email to the customer
+    await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${import.meta.env.VITE_RESEND_API_KEY}`,
+      },
+      body: JSON.stringify({
+        from: import.meta.env.VITE_FROM_EMAIL || 'noreply@convertmax.online',
+        to: formData.email,
+        subject: "You've booked your free strategy call",
+        html: confirmationEmailTemplate(formData),
+      }),
+    });
+
     setStatus('success');
     
   } catch (err) {
