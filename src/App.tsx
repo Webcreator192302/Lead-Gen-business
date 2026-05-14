@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import { ownerNotificationEmailTemplate, confirmationEmailTemplate } from './emails/templates';
 import { useState, useEffect, useRef } from 'react';
 import { 
   Menu, 
