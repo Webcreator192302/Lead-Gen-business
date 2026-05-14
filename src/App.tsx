@@ -357,31 +357,20 @@ const BookingForm = () => {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus('loading');
+  e.preventDefault();
+  setStatus('loading');
+  
+  try {
+    // Save to Firestore (this works)
+    await saveLead(formData);
     
-    try {
-      // Save locally to Firestore
-      const result = await saveLead(formData);
-      
-      // Also notify backend (which might handle emails)
-      const res = await fetch('/api/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
-      
-      const data = await res.json();
-      if (data.success) {
-        setStatus('success');
-      } else {
-        setStatus('error');
-      }
-    } catch (err) {
-      console.error(err);
-      setStatus('error');
-    }
-  };
+    setStatus('success');
+    
+  } catch (err) {
+    console.error(err);
+    setStatus('error');
+  }
+};
 
   if (status === 'success') {
     return (
